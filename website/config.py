@@ -1,9 +1,18 @@
 import os
+import json
+
+# Server
+with open('/etc/config.json') as config_file:
+    config=json.load(config_file)
 
 class Config:
-    SECRET_KEY = os.environ.get("FLASK_BLOG_SECRET_KEY")
+    # Server
+    SECRET_KEY = config.get("FLASK_BLOG_SECRET_KEY")
+    SQLALCHEMY_DATABASE_URI = config.get("FLASK_BLOG_SQLALCHEMY_DATABASE_URI")
 
-    SQLALCHEMY_DATABASE_URI = os.environ.get("FLASK_BLOG_SQLALCHEMY_DATABASE_URI")
+    # Local
+    # SECRET_KEY = os.environ.get("FLASK_BLOG_SECRET_KEY")
+    # SQLALCHEMY_DATABASE_URI = os.environ.get("FLASK_BLOG_SQLALCHEMY_DATABASE_URI")
 
     # MAIL_SERVER = os.environ.get("FLASK_BLOG_MAIL_SERVER")
     # MAIL_PORT = 587

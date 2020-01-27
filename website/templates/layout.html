@@ -26,12 +26,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('main.home')}}">Home</a>
+              <!-- <a class="nav-item nav-link" href="{{ url_for('main.home')}}">Home</a> -->
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
-                <a class="nav-item nav-link" href="{{ url_for('posts.new_post')}}">New Post</a>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle"
@@ -39,15 +38,11 @@
                           height="21">
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ url_for('users.user_posts', username=current_user.username)}}">My Posts</a>
                     <a class="dropdown-item" href="{{ url_for('users.account')}}">Account</a>
                     <!-- <div class="dropdown-divider"></div> -->
                     <a class="dropdown-item" href="{{ url_for('users.logout')}}">Logout</a>
                   </div>
                 </li>
-              {% else %}
-                <a class="nav-item nav-link" href="{{ url_for('users.login')}}">Login</a>
-                <a class="nav-item nav-link" href="{{ url_for('users.register')}}">Register</a>
               {% endif %}
             </div>
           </div>

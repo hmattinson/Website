@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <!-- Form -->
+        <form action="" method="POST" enctype="multipart/form-data">
+          {{ form.hidden_tag() }} <!-- CRF token -->
+          <fieldset class='form-group'>
+            <legend class="border-bottom mb-4">Cards Solver</legend>
+            <div class="form-group">
+              {{ form.cards.label(class="form-control-label") }}
+
+              {% if form.cards.errors %}
+                {{ form.cards(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feed">
+                  {% for error in form.cards.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.cards(class="form-control form-control-lg") }}
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+                    {{ form.target.label(class="form-control-label") }}
+                    {% if form.target.errors %}
+                        {{ form.target(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.target.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.target(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+
+          </fieldset>
+          <div class="formgroup">
+            {{ form.submit(class="btn btn-outline-info") }}
+          </div>
+        </form>
+
+        {% if solution %}
+          {{ solution}}
+        {% endif %}
+
+  </div>
+{% endblock content %}

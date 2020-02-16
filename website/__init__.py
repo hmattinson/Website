@@ -25,9 +25,11 @@ def create_app(config_class=Config):
     from website.main.routes import main
     from website.errors.handlers import errors
     from website.recipes.routes import recipes
+    from website.card_solver.routes import card_solver_blueprint
     app.register_blueprint(users)
     app.register_blueprint(main)
     app.register_blueprint(errors)
     app.register_blueprint(recipes)
+    app.register_blueprint(card_solver_blueprint)
 
     return app

@@ -9,9 +9,9 @@
             <legend class="border-bottom mb-4">Cards Solver</legend>
 
             {% for card in ['A','2','3','4','5','6','7','8','9','10','J','Q','K'] %}
-              <button type="button" class="btn btn-primary btn-lg mt-1" onclick="addCard('{{card}}')">{{card}}</button>
+              <button type="button" class="btn btn-primary btn-lg mb-1" onclick="addCard('{{card}}')">{{card}}</button>
             {% endfor %}
-            <button type="button" class="btn btn-danger btn-lg mt-1" onclick="clearCards()">Clear</button>
+            <button type="button" class="btn btn-danger btn-lg mb-1" onclick="clearCards()">Clear</button>
 
             <div class="form-group">
               {{ form.cards.label(class="form-control-label") }}

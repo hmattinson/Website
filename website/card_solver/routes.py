@@ -8,7 +8,7 @@ card_solver_blueprint = Blueprint('card_solver', __name__)
 def card_solver():
     form = CardsForm()
     if form.validate_on_submit():
-        cards = form.cards.data.split(' ')
+        cards = form.cards.data.strip().split(' ')
         target = form.target.data
         answer = solve(cards, target)
         if answer[0] == 'N':

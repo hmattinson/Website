@@ -44,6 +44,5 @@ def solve(digits, target):
                         exp = [ (term if not term.startswith('F(') else term[2:term.find(')')])
                                for term in exp ]
                     ans = ' '.join(exp).rstrip()
-                    return "Solution found: " + ans
-                    return ans
-    return "No solution found for: ", ' '.join(digits)
+                    return (True,"Solution found: " + ans)
+    return (False,f"No solution found for: {' '.join(digits)}")

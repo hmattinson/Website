@@ -19,7 +19,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
-    # mail.init_app(app)
+    mail.init_app(app)
 
     from website.users.routes import users
     from website.main.routes import main

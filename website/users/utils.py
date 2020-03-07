@@ -17,3 +17,24 @@ def save_picture(form_picture):
 
     i.save(picture_path)
     return picture_fn
+
+def send_request_email(user):
+    token = user.username
+    msg = Message('Account Request',
+                  sender='noreply@mattinson.nl',
+                  recipients=["henrymattinson@westfieldhouse.org"])
+    msg.body = f'''Account requested for {user.username}, email: {user.email}.
+    Authenticate: {url_for('users.add_user', token=token, _external=True)}
+'''
+    mail.send(msg)
+
+def send_set_email(user):
+    token = user.get_reset_token()
+    msg = Message('Set Password',
+                  sender='noreply@mattinson.nl',
+                  recipients=[user.email])
+    msg.body = f'''To set your password, visit the following link:
+{url_for('users.reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)

@@ -11,10 +11,10 @@ def card_solver():
         cards = form.cards.data.strip().split(' ')
         target = form.target.data
         answer = solve(cards, target)
-        if answer[0] == 'N':
-            flash(answer, 'danger')
+        if answer[0]:
+            flash(answer[1], 'success')
         else:
-            flash(answer, 'success')
+            flash(answer[1], 'danger')
         return redirect(url_for('card_solver.card_solver'))
     elif request.method == 'GET':
         form.target.data = 24

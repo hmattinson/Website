@@ -22,6 +22,10 @@ class User(db.Model, UserMixin):
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
     @staticmethod
+    def verify_request_token(token):
+        return User.query.filter_by(username=token).first()
+
+    @staticmethod
     def verify_reset_token(token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
@@ -33,18 +37,22 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
+
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    time = db.Column(db.DateTime, nullable=False)
+    time = db.Column(db.Integer, nullable=False)
     people = db.Column(db.Integer, nullable=False)
     difficulty = db.Column(db.String(16), nullable=False)
-    ingredients_difficulty = db.Column(db.String(16), nullable=True)
+    source_name = db.Column(db.String(100), nullable=False)
+    source_link = db.Column(db.String(100), nullable=False)
     ingredients = db.Column(db.String, nullable=False)
     method = db.Column(db.Text, nullable=False)
     tags = db.Column(db.String, nullable=False)
     type = db.Column(db.String, nullable=False)
     notes = db.Column(db.Text, nullable=False)
-    source = db.Column(db.String(100), nullable=False)

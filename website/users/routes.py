@@ -2,8 +2,8 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import login_user, current_user, logout_user, login_required
 from website import db, bcrypt
 from website.models import User
-from website.users.forms import (LoginForm, UpdateAccountForm)
-from website.users.utils import save_picture
+from website.users.forms import (LoginForm, UpdateAccountForm, RegistrationForm, ResetPasswordForm)
+from website.users.utils import save_picture, send_request_email, send_set_email
 
 users = Blueprint('users', __name__)
 
@@ -31,6 +31,49 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+@users.route("/register", methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash("Secret_Password").decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        send_request_email(user)
+        db.session.add(user)
+        db.session.commit()
+        flash('Access has been requested', 'success')
+        return redirect(url_for('main.home'))
+    return render_template('register.html', title='Register', form=form)
+
+
+@users.route("/add_user/<token>", methods=['GET', 'POST'])
+def add_user(token):
+    user = User.verify_request_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('users.register'))
+    send_set_email(user)
+    flash('Password set email sent to user', 'success')
+    return redirect(url_for('main.home'))
+
+@users.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')
+        return redirect(url_for('users.reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('users.login'))
+    return render_template('reset_token.html', title='Reset Password', form=form)
 
 
 @users.route('/account', methods=['GET','POST'])

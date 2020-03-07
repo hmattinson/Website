@@ -17,7 +17,8 @@ class Config:
         MAIL_PORT = 587
         MAIL_USE_TLS = True
         MAIL_USERNAME = config.get("FLASK_BLOG_MAIL_USERNAME")
-        MAIL_PASSWORD = config.get("FLASK_BLOG_MAIL_PASSWORD")
+        pw = config.get("FLASK_BLOG_MAIL_PASSWORD")
+        MAIL_PASSWORD = base64.b64decode(pw).decode("utf-8")
 
     # Local
     else:

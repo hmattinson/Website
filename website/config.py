@@ -1,6 +1,7 @@
 import os
 import json
 import socket
+import base64
 
 # Server
 if socket.gethostname() == 'ubuntu-instance':
@@ -12,6 +13,11 @@ class Config:
     if socket.gethostname() == 'ubuntu-instance':
         SECRET_KEY = config.get("FLASK_BLOG_SECRET_KEY")
         SQLALCHEMY_DATABASE_URI = config.get("FLASK_BLOG_SQLALCHEMY_DATABASE_URI")
+        MAIL_SERVER = config.get("FLASK_BLOG_MAIL_SERVER")
+        MAIL_PORT = 587
+        MAIL_USE_TLS = True
+        MAIL_USERNAME = config.get("FLASK_BLOG_MAIL_USERNAME")
+        MAIL_PASSWORD = config.get("FLASK_BLOG_MAIL_PASSWORD")
 
     # Local
     else:
@@ -21,4 +27,5 @@ class Config:
         MAIL_PORT = 587
         MAIL_USE_TLS = True
         MAIL_USERNAME = os.environ.get("FLASK_BLOG_MAIL_USERNAME")
-        MAIL_PASSWORD = os.environ.get("FLASK_BLOG_MAIL_PASSWORD")
+        pw = os.environ.get("FLASK_BLOG_MAIL_PASSWORD")
+        MAIL_PASSWORD = base64.b64decode(pw).decode("utf-8")

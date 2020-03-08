@@ -26,9 +26,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              {% if current_user.is_authenticated %}
-
-              {% endif %}
               <a class="nav-item nav-link" href="{{ url_for('recipes.all')}}">Recipes</a>
               <a class="nav-item nav-link" href="{{ url_for('card_solver.card_solver')}}">24</a>
             </div>

@@ -22,7 +22,6 @@ def solve(digits, target):
                          for y in range(x+4, exprlen+2, 2)
                          if (x,y) != (0,exprlen+1)]
                  + [(0, 4, 6, 10)] ) # double brackets case
-    print(brackets)
     for d in digiperm:
         for ops in opcomb:
             if '/' in ops:

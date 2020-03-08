@@ -47,5 +47,7 @@ class RecipeForm(FlaskForm):
         ('Caserole','Caserole'),
         ('Main','Main'),
         ('Starter','Starter'),
-        ('Dessert','Dessert')])
+        ('Dessert','Dessert'),
+        ('Indian','India'),
+        ('Thai','Thailand')])
     submit = SubmitField('Submit')

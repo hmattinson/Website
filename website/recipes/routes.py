@@ -4,6 +4,7 @@ from website import db
 from website.models import Recipe
 from website.recipes.forms import RecipeForm
 from website.recipes.utils import save_picture
+import os
 
 recipes = Blueprint('recipes', __name__)
 

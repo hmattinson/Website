@@ -4,7 +4,8 @@
 <div class="content-section">
   <div id="summary" class="media">
       <img class="rounded mr-2"
-            src={{url_for('static',filename='recipe_pics/' + recipe.image_file)}}>
+            src={{url_for('static',filename='recipe_pics/' + recipe.image_file)}}
+            height=255>
       <div class="media-body">
         <h2 class="display-4">{{recipe.title}}</h2>
         <p>{{recipe.description}}</p>

@@ -4,6 +4,7 @@ from website import db, bcrypt
 from website.models import User
 from website.users.forms import (LoginForm, UpdateAccountForm, RegistrationForm, ResetPasswordForm)
 from website.users.utils import save_picture, send_request_email, send_set_email
+import os
 
 users = Blueprint('users', __name__)
 

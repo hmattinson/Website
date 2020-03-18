@@ -38,7 +38,6 @@
         {% if current_user.is_authenticated %}
           <div>
             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('recipes.update_recipe', recipe_id=recipe.id) }}">Update</a>
-            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
           </div>
         {% endif %}
     </div>

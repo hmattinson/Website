@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+  <form action="" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-2">{{ legend }}</legend>
+      <label class="form-control-label">Time</label><br>
+      <div class="row">
+        <div class="col-2">
+          min:
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            {{ form.min_time(class="form-control form-control-sm")}}
+          </div>
+        </div>
+        <div class="col-2">
+            max:
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            {{ form.max_time(class="form-control form-control-sm")}}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+          {{ form.tags.label(class="form-control-label") }}
+          {{ form.tags(style="list-style-type:none", class="pl-0 ml-0")}}
+      </div>
+      <div class="form-group">
+          {{ form.type.label(class="form-control-label") }}
+          {{ form.type(style="list-style-type:none", class="pl-0 ml-0")}}
+      </div>
+    </fieldset>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+  </form>
+</div>
+{% endblock content %}

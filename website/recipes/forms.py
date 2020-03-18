@@ -1,10 +1,13 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, IntegerField, SubmitField, TextAreaField, SelectMultipleField
+from wtforms import StringField, IntegerField, SubmitField, TextAreaField, SelectMultipleField, widgets
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
 from flask_login import current_user
 from website.models import Recipe
 
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 class RecipeForm(FlaskForm):
     title = StringField('Title',
@@ -34,12 +37,12 @@ class RecipeForm(FlaskForm):
                         validators=[DataRequired()])
     notes = TextAreaField('Notes',
                         validators=[])
-    tags = SelectMultipleField('Tags', choices = [
+    tags = MultiCheckboxField('Tags', choices = [
         ('Vegetarian','Vegetarian'),
         ('One-pot','One-pot'),
         ('Spicy','Spicy'),
         ('Hard ingredients','Hard ingredients')])
-    type = SelectMultipleField('Type',choices = [
+    type = MultiCheckboxField('Type',choices = [
         ('Curry','Curry'),
         ('Pasta','Pasta'),
         ('Soup','Soup'),
@@ -48,6 +51,31 @@ class RecipeForm(FlaskForm):
         ('Main','Main'),
         ('Starter','Starter'),
         ('Dessert','Dessert'),
-        ('Indian','India'),
-        ('Thai','Thailand')])
+        ('India','Indian'),
+        ('Thailand','Thai'),
+        ('China','Chinese'),
+        ('Breakfast','Breakfast')])
+    submit = SubmitField('Submit')
+
+class RecipeFilterForm(FlaskForm):
+    min_time = StringField('Min')
+    max_time = StringField('Max')
+    tags = MultiCheckboxField('Tags', choices = [
+        ('Vegetarian','Vegetarian'),
+        ('One-pot','One-pot'),
+        ('Spicy','Spicy'),
+        ('Hard ingredients','Hard ingredients')])
+    type = MultiCheckboxField('Type',choices = [
+        ('Curry','Curry'),
+        ('Pasta','Pasta'),
+        ('Soup','Soup'),
+        ('Meat','Meat'),
+        ('Caserole','Caserole'),
+        ('Main','Main'),
+        ('Starter','Starter'),
+        ('Dessert','Dessert'),
+        ('India','Indian'),
+        ('Thailand','Thai'),
+        ('China','Chinese'),
+        ('Breakfast','Breakfast')])
     submit = SubmitField('Submit')

@@ -2,8 +2,10 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import current_user, login_required
 from website import db
 from website.models import Recipe
-from website.recipes.forms import RecipeForm
+from website.recipes.forms import RecipeForm, RecipeFilterForm
 from website.recipes.utils import save_picture
+import os
+import flask_sqlalchemy
 
 recipes = Blueprint('recipes', __name__)
 
@@ -81,8 +83,37 @@ def update_recipe(recipe_id):
                            form=form, legend='Update Recipe')
 
 
-@recipes.route("/recipes")
+@recipes.route("/recipes", methods=["POST","GET"])
 def all():
-    page = request.args.get('page', 1, type=int)
-    recipes = Recipe.query.order_by(Recipe.id.desc()).paginate(page=page, per_page=10)
-    return render_template('recipes.html', recipes=recipes)
+    form = RecipeFilterForm()
+    if form.validate_on_submit():
+        return redirect(url_for('recipes.all',
+                            max=form.max_time.data,
+                            min=form.min_time.data,
+                            tags=form.tags.data,
+                            type=form.type.data))
+    else:
+        # Process arguemnts
+        page = request.args.get('page', 1, type=int)
+        max = request.args.get('max', default=10000, type=int)
+        min = request.args.get('min', default=0, type=int)
+        type = request.args.getlist('type')
+        tags = request.args.getlist('tags')
+        # Refill form
+        if max != 10000:
+            form.max_time.data = max
+        if min != 0:
+            form.min_time.data = min
+        form.tags.data = tags
+        form.type.data = type
+        # Do filtering
+        recs = Recipe.query.filter(Recipe.time<max)\
+                            .filter(Recipe.time>min)\
+        # all didnt work for some reason so used de morgans
+        type_ids = [r.id for r in recs if not any([not t in r.type.split(",") for t in type])]
+        tags_ids = [r.id for r in recs if not any([not t in r.tags.split(",") for t in tags])]
+        recs = recs.filter(Recipe.id.in_(type_ids))\
+                            .filter(Recipe.id.in_(tags_ids))\
+                            .order_by(Recipe.id.desc())\
+                            .paginate(page=page, per_page=10)
+    return render_template('recipes.html', recipes=recs, form=form, legend="Filter")

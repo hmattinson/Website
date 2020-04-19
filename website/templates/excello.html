@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Excello @ NIME 2020</h1>
+
+    <p>Welcome to the NIME 2020 installation for Excello. The following page
+      will outline a self-guided experience for understanding and using
+      Excello. There are two videos; one outlining the motivation behind
+      Excello, and a second demonstrating how to use it. Below these I will
+      document how to run Excello yourself along with some examples. All code
+      and examples can be found in the
+      <a href="https://github.com/hmattinson/Excello">Github repo</a>. Please
+      submit your own compositions, we'd love to see!
+    </p>
+
+    <p>The paper published in NIME 2020 can be found here:
+        <a href="https://github.com/hmattinson/Excello/blob/master/Excello_NIME_2020.pdf">Paper</a>
+    </p>
+
+    <p>Here is a short video covering the motivation and method for the
+      project: <a href='https://youtu.be/SkRKV_uJV1Y'>Presentation</a>
+    </p>
+
+    <p>Learn how to use Exello here:
+      <a href="https://youtu.be/wn1W-l9bztY">Demo</a>
+    </p>
+
+    <h2>Running Excello</h2>
+      To use Excello, the code must be running somewhere, and Excel must be given
+      a manifest file that points to where this is running so it can provide it as
+      an add-in. You can run Excello on your own computer, or use an online hosted
+      version. The online version should be easier but runs a little slower.
+    <h4>Using an externally hosted version</h4>
+    This was written for using Excel online, steps may differ slightly for
+    different version of Excel.
+    <ul>
+      <li>Download this <a href="https://github.com/hmattinson/Excello/blob/master/Excel%20Music/manifest.xml">manifest.xml file</a></li>
+      <li>Open <a href="https://github.com/hmattinson/Excello/blob/master/Excel%20Music.xlsx">this spreadsheet</a> (in an Excel version that supports add-ins)</li>
+      <li>Insert > Office Add-ins > Upload My Add-in</li>
+      <li>Find and upload the manifest.xml file you downloaded</li>
+      <li>Excello will now be available in your home tab in the ribbon</li>
+    </ul>
+    <h4>Running Locally</h4>
+    <ul>
+      <li>Clone the Github Repo</li>
+      <li>Run with Node (<a href="https://docs.microsoft.com/en-us/office/dev/add-ins/tutorials/excel-tutorial?tutorial-step=1">helpful Microsoft tutorial</a>)</li>
+      <li>Open Excel (a version that supports add-ins)</li>
+      <li>Insert > Office Add-ins > Upload My Add-in</li>
+      <li>Find and upload the local_manifest.xml file you downloaded</li>
+      <li>Excello will now be available in your home tab in the ribbon</li>
+    </ul>
+
+    <h2>Submitting your compositions</h2>
+    <p>We'd love you to check out other user's compositions in the
+    <a href = "https://github.com/hmattinson/Excello/tree/master/user_contributions">user_compositions</a>
+    folder in the Github repo.</p>
+    <p>We'd love to see what you've done. Upload your contributions as a pull-request to the folder!</p>
+{% endblock content %}
